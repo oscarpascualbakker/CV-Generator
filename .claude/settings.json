@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(/.agents/skills/cv-a-medida/**)",
+      "Skill(update-config:*)",
+      "Bash(unzip -p:*)",
+      "Bash(echo:*)",
+      "Bash(cd:*)",
+      "Bash(mkdir -p:*)",
+      "Bash(node build-cv.js:*)",
+      "Bash(python3 tools/validate-cv.py:*)",
+      "Bash(pandoc -t plain --wrap=none:*)",
+      "Bash(node tools/build-cv.js:*)"
+    ],
+    "deny": [
+      "Bash(soffice)",
+      "Bash(soffice *)",
+      "Bash(libreoffice)",
+      "Bash(libreoffice *)",
+      "Bash(/Applications/LibreOffice.app/Contents/MacOS/soffice*)",
+      "Bash(pdftoppm)",
+      "Bash(pdftoppm *)",
+      "Bash(pdftocairo)",
+      "Bash(pdftocairo *)",
+      "Bash(pdfinfo)",
+      "Bash(pdfinfo *)",
+      "Bash(brew install *libreoffice*)",
+      "Bash(brew install *poppler*)"
+    ]
+  }
+}

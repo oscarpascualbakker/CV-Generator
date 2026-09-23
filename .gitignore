@@ -1,0 +1,27 @@
+# --- Datos personales: NUNCA se publican ---
+# El banco de evidencias real es la fuente de verdad privada. Se versiona el ejemplo
+# ficticio (CARRERA-EVIDENCIAS.example.md), nunca el real.
+CARRERA-EVIDENCIAS.md
+
+# Antigua ubicacion de la fuente del CV. Ahora vive en candidaturas/<carpeta>/,
+# pero se sigue ignorando por si alguien la crea aqui.
+tools/cv-content.js
+
+# Registro personal de candidaturas y todas las candidaturas reales.
+CANDIDATURAS.md
+candidaturas/
+
+# Documentos generados
+*.pdf
+*.docx
+*.docx.bak
+~$*.docx
+page-*.jpg
+pg-*.jpg
+
+# Ajustes locales de Claude Code (pueden contener rutas personales)
+.claude/settings.local.json
+
+# Dependencias y ruido del sistema
+node_modules/
+.DS_Store

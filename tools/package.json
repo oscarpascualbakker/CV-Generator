@@ -1,0 +1,9 @@
+{
+  "name": "cv-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generador de CV en DOCX. Detalle de implementacion del sistema, reemplazable.",
+  "dependencies": {
+    "docx": "^9.0.0"
+  }
+}
