@@ -2,56 +2,64 @@
 # Barrera contra la publicacion de datos personales.
 #
 # Bloquea el commit si:
-#   1. Se intenta versionar un fichero privado (aunque se fuerce con `git add -f`).
-#   2. Algun fichero del commit contiene los datos de identidad de la seccion 1 de
-#      CARRERA-EVIDENCIAS.md (nombre, telefono, email, LinkedIn, GitHub).
+#   1. Se intenta versionar un fichero privado (aunque se fuerce con `git add -f`),
+#      en cualquiera de los dos idiomas (CARRERA-EVIDENCIAS.md / CAREER-EVIDENCE.md...).
+#   2. Algun fichero del commit contiene los datos de identidad de la seccion 1 del
+#      banco (nombre, telefono, email, LinkedIn, GitHub).
+#
+# La lista de ficheros privados y la lectura del banco viven en tools/cvcheck/bank.py,
+# compartidas con el validador.
 #
 # Se activa una vez por clon:  git config core.hooksPath .githooks
 # Saltarselo (git commit --no-verify) es posible, pero deliberado.
 import fnmatch
 import os
-import re
 import subprocess
 import sys
 
-PRIVATE = [
-    "CARRERA-EVIDENCIAS.md",
-    "CANDIDATURAS.md",
-    "candidaturas/*",
-    "tools/cv-content.js",
-    "*.docx",
-    "*.pdf",
-    ".claude/settings.local.json",
-]
-IDENTITY_FIELDS = {"nombre", "teléfono", "telefono", "email", "linkedin", "github"}
+MESSAGES = {
+    "es": {
+        "private": "fichero privado: {p}",
+        "personal": "dato personal en {p}: {v}",
+        "blocked": "pre-commit: commit bloqueado para no publicar datos personales.\n",
+        "fix": "\nQuita esos ficheros o datos del commit (git restore --staged <fichero>).",
+    },
+    "en": {
+        "private": "private file: {p}",
+        "personal": "personal data in {p}: {v}",
+        "blocked": "pre-commit: commit blocked to avoid publishing personal data.\n",
+        "fix": "\nRemove those files or data from the commit (git restore --staged <file>).",
+    },
+}
 
 
 def git(*args):
     return subprocess.run(["git", *args], capture_output=True, text=True, check=True).stdout
 
 
-def identity_values(bank):
-    """Valores de la tabla de la seccion 1 del banco real. Si no hay banco, no hay nada que proteger."""
-    if not os.path.exists(bank):
-        return []
-    values = []
-    for line in open(bank, encoding="utf-8"):
-        m = re.match(r"^\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*$", line)
-        if m and m.group(1).lower() in IDENTITY_FIELDS:
-            values.append(m.group(2))
-    return [v for v in values if len(v) >= 6]
-
-
 def main():
     root = git("rev-parse", "--show-toplevel").strip()
+    sys.path.insert(0, os.path.join(root, "tools"))
+    from cvcheck import bank
+
+    # Los datos a proteger salen de los bancos reales que existan. Si no hay banco,
+    # no hay datos que proteger, pero los ficheros privados se siguen bloqueando.
+    values, lang = [], "en"
+    for code in ("en", "es"):
+        path = os.path.join(root, bank.BANK_NAMES[code])
+        if os.path.exists(path):
+            text = open(path, encoding="utf-8").read()
+            values += bank.identity_values(text)
+            lang = bank.bank_lang(text, path)
+    msg = MESSAGES[lang]
+
     staged = [p for p in git("diff", "--cached", "--name-only", "--diff-filter=ACMR", "-z").split("\0") if p]
     problems = []
 
     for p in staged:
-        if any(fnmatch.fnmatch(p, pat) for pat in PRIVATE):
-            problems.append(f"fichero privado: {p}")
+        if any(fnmatch.fnmatch(p, pat) for pat in bank.PRIVATE_PATTERNS):
+            problems.append(msg["private"].format(p=p))
 
-    values = identity_values(os.path.join(root, "CARRERA-EVIDENCIAS.md"))
     for p in staged:
         try:
             content = git("show", f":{p}")
@@ -60,13 +68,13 @@ def main():
         low = content.lower()
         for v in values:
             if v.lower() in low:
-                problems.append(f"dato personal en {p}: {v}")
+                problems.append(msg["personal"].format(p=p, v=v))
 
     if problems:
-        print("pre-commit: commit bloqueado para no publicar datos personales.\n", file=sys.stderr)
+        print(msg["blocked"], file=sys.stderr)
         for pr in problems:
             print(f"  - {pr}", file=sys.stderr)
-        print("\nQuita esos ficheros o datos del commit (git restore --staged <fichero>).", file=sys.stderr)
+        print(msg["fix"], file=sys.stderr)
         sys.exit(1)
 
 

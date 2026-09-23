@@ -1,8 +1,14 @@
+---
+lang: es
+---
+
 # Banco de evidencias de carrera - Jane Doe (EJEMPLO FICTICIO)
 
 > EJEMPLO. Ninguna persona, empresa, métrica ni fecha de este fichero es real.
 > Sirve para demostrar el método. Copia este fichero a `CARRERA-EVIDENCIAS.md` y
 > sustituye su contenido por el tuyo. El real NO se versiona (ver .gitignore).
+> La línea `lang: es` de la cabecera fija el idioma del sistema (skill e informes).
+> Para usarlo en inglés, parte de `CAREER-EVIDENCE.example.md`.
 >
 > Fuente única de verdad. Ningún CV, carta o mensaje puede afirmar nada que no esté aquí.
 > Si algo no está en este fichero, no existe. Se pregunta, se añade aquí, y solo entonces se usa.
@@ -96,6 +102,7 @@ por cuenta ajena. En el CV se sitúa como emprendimiento paralelo, nunca como de
 | ID | Evidencia | Métrica | Rol | Ver. | Fuerza |
 |---|---|---|---|---|---|
 | EV-20 | Plataforma agéntica autónoma propia de 13 agentes, ejecución diaria autónoma, 3+ meses en producción continua | 13 agentes, cadencia diaria, 3+ meses en producción | Proyecto propio | V | A |
+| EV-21 | Trabajo con Model Context Protocol (MCP) como estándar de integración | Cualitativa | R-01 | C | B |
 | EV-23 | Evaluación de LLMs, guardrails y criterios de aceptación para salidas no deterministas | Cualitativa | R-01 | V | B |
 | EV-25 | Optimización de coste de inferencia y búsqueda de salidas deterministas | Cualitativa | R-02 | V | B |
 
@@ -137,7 +144,7 @@ por cuenta ajena. En el CV se sitúa como emprendimiento paralelo, nunca como de
 |---|---|
 | IA en producto / producción | EV-01, EV-03, EV-04, EV-20 |
 | IA aplicada al SDLC | EV-10, EV-11, EV-14 |
-| Sistemas agénticos y multi-agente | EV-20, EV-23 |
+| Sistemas agénticos y multi-agente | EV-20, EV-21, EV-23 |
 | Liderazgo de personas | EV-30, EV-31, EV-32, EV-35, EV-36, EV-40 |
 | Turnaround de equipos | EV-30, EV-31, EV-32, EV-35 |
 | Escalado de organización | EV-40, EV-36 |
@@ -190,7 +197,8 @@ Nunca se rellenan inventando. Se reconocen y se compensan con lo adyacente.
 | Equipos de más de 16 personas | Máximo verificado: 16 | EV-40 (duplicó) | Cifras de organización que no estén en la sección 2 |
 
 **Regla de compensación**: un hueco duro no se menciona en el CV. Se prepara una respuesta
-para la entrevista y se registra en el informe de encaje.
+para la entrevista y se registra en el informe de encaje. Cada hueco duro tiene además su
+fila en la sección 10, para que el validador lo detecte si se cuela.
 
 ---
 
@@ -205,7 +213,7 @@ Prohibiciones absolutas. Se aplican a CV, carta, mensaje y perfil.
 5. **Ninguna tecnología se lista en skills si no hay una evidencia detrás.**
 6. **No se menciona disponibilidad ni urgencia.** El tono es de selectividad.
 7. **Sin guiones largos (em-dash) en ningún texto.**
-8. **Español de España** cuando el documento vaya en español. El CV normalmente va en inglés.
+8. **Español de España** cuando el documento vaya en español. El CV normalmente va en inglés, con una sola variante (UK o US) en todo el documento.
 9. **No se inventan fechas, títulos ni nombres de empresa.** La sección 2 es la única cronología válida.
 10. **Cada bullet del CV debe poder defenderse 20 minutos en una entrevista.**
 
@@ -215,7 +223,7 @@ Prohibiciones absolutas. Se aplican a CV, carta, mensaje y perfil.
 
 Lo que falta y merece la pena cerrar, por orden de retorno:
 
-1. Cerrar métricas de las evidencias agénticas (EV-20, EV-23).
+1. Cerrar métricas de las evidencias agénticas (EV-20, EV-23) y confirmar EV-21 (MCP).
 2. Tamaño de los equipos de R-01, R-02, R-05, R-06, R-07: solo R-04 tiene cifra.
 3. Historias STAR para las evidencias de fuerza A más usadas.
 
@@ -229,3 +237,21 @@ Lo que falta y merece la pena cerrar, por orden de retorno:
 | Objetivo | 110.000 GBP brutos/año o más. Por debajo de 95.000, descarte probable |
 | Si la oferta no publica banda | Incógnita a resolver en el primer contacto con el recruiter, antes de invertir en materiales |
 | Consultoría / forward-deployed | No, aunque sea en plantilla. Señales: "the client/customer/account", "forward deployed", "client travel", empresa que vende despliegues a terceros |
+
+---
+
+## 10. Lista de vigilancia del validador
+
+Términos que `tools/validate-cv.py` busca en el CV y en los mensajes. Es lo único de tu
+carrera que el validador necesita saber, y vive aquí, no en el código.
+
+- **Término**: texto literal (varios, separados por comas) o una expresión regular entre
+  comillas invertidas. Un literal todo en mayúsculas (`MCP`, `A2A`) distingue mayúsculas.
+- **Nivel**: `hueco` (hueco duro de la sección 6: bloquea), `sin evidencia` (no hay `EV`
+  detrás: bloquea), `confirmar` (evidencia marcada `C`: avisa).
+
+| Término | Nivel | Motivo |
+|---|---|---|
+| GxP, 21 CFR, Part 11, computerized system validation | hueco | Sin experiencia en entornos GxP o validados (sección 6). |
+| MCP, Model Context Protocol | confirmar | EV-21 marcada C. Confirmar qué se ha construido antes de enviar. |
+| A2A | sin evidencia | Nunca lo ha usado: no se puede afirmar. |
