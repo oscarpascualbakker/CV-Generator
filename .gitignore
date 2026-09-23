@@ -19,7 +19,8 @@ candidaturas/
 page-*.jpg
 pg-*.jpg
 
-# Ajustes locales de Claude Code (pueden contener rutas personales)
+# Ajustes de Claude Code del candidato (permisos y rutas personales)
+.claude/settings.json
 .claude/settings.local.json
 
 # Dependencias y ruido del sistema
