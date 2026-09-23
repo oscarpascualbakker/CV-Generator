@@ -67,6 +67,12 @@ Aplican a todo lo que se produzca aquí, en cualquier idioma:
 - El CV va en inglés por defecto.
 - Nada de señales de disponibilidad ni de urgencia en textos públicos.
 
+## Si modificas el sistema
+
+Las dos skills y los dos bancos de ejemplo son gemelos: un cambio en el método se hace en los
+dos idiomas. Los textos del validador tienen sus dos versiones juntas en
+`tools/cvcheck/messages.py`.
+
 ## Antes de dar por bueno un CV
 
 Las verificaciones son obligatorias y están detalladas en la skill:
@@ -146,6 +152,12 @@ They apply to everything produced here, in any language:
 - In English, one variant (UK or US) per document.
 - The CV is in English by default.
 - No availability or urgency signals in public texts.
+
+## If you change the system
+
+The two skills and the two example banks are twins: a change to the method is made in both
+languages. The validator strings keep their two versions side by side in
+`tools/cvcheck/messages.py`.
 
 ## Before accepting a CV
 
