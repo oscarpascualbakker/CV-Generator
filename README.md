@@ -3,7 +3,8 @@
 # Sistema de CV a medida
 
 Convierte una oferta de trabajo en una candidatura completa. El valor no está en el código:
-está en el banco de evidencias y en el método.
+está en el banco de evidencias y en el método. El banco de evidencias es el fichero
+`CARRERA-EVIDENCIAS.md`, un Markdown con toda tu trayectoria del que sale cada línea de tus CV.
 
 > [!CAUTION]
 > **Revisa siempre tu CV antes de enviarlo a una empresa.** La IA puede cometer errores
@@ -155,13 +156,14 @@ El proyecto no depende de ninguna herramienta concreta:
 
 ## Mantenimiento
 
-Cada candidatura debería dejar el banco mejor de lo que lo encontró. La sección 8 del banco
-lleva la lista de lo que falta por documentar, ordenada por retorno, y la sección 10, lo que
-el validador tiene que vigilar.
+Cada candidatura debería dejar el banco mejor de lo que lo encontró. Al terminar, la skill
+te propone las evidencias nuevas que hayan salido durante el proceso y, si aparece un hueco
+duro, su fila para la lista de vigilancia. Revísalas y añade a `CARRERA-EVIDENCIAS.md` las
+que aceptes: la IA no lo edita por ti.
 
-Las dos skills y los dos bancos de ejemplo son gemelos: un cambio en el método se hace en los
-dos idiomas. Los textos del validador tienen sus dos versiones juntas en
-`tools/cvcheck/messages.py`.
+De vez en cuando, repasa la sección 8 de `CARRERA-EVIDENCIAS.md`, la deuda del banco: lo que
+falta por documentar, ordenado por retorno. Cada punto que cierres mejora todas las
+candidaturas siguientes.
 
 ---
 
@@ -170,7 +172,8 @@ dos idiomas. Los textos del validador tienen sus dos versiones juntas en
 *[Versión en español](#sistema-de-cv-a-medida) al principio de este documento.*
 
 Turns a job posting into a complete application. The value is not in the code:
-it is in the evidence bank and the method.
+it is in the evidence bank and the method. The evidence bank is the file
+`CAREER-EVIDENCE.md`, a Markdown file with your whole career that every line of your CVs comes from.
 
 > [!CAUTION]
 > **Always review your CV before sending it to a company.** AI can make mistakes
@@ -322,10 +325,10 @@ The project does not depend on any specific tool:
 
 ## Maintenance
 
-Every application should leave the bank better than it found it. Section 8 of the bank
-keeps the list of what is still to be documented, ordered by payoff, and section 10 what the
-validator has to watch.
+Every application should leave the bank better than it found it. When it finishes, the
+skill proposes any new evidence that came up along the way and, if a hard gap appears, its row
+for the watchlist. Review them and add the ones you accept to `CAREER-EVIDENCE.md`: the AI
+does not edit it for you.
 
-The two skills and the two example banks are twins: a change to the method is made in both
-languages. The validator strings keep their two versions side by side in
-`tools/cvcheck/messages.py`.
+Every so often, go over section 8 of `CAREER-EVIDENCE.md`, the bank's debt: what is still to
+be documented, ordered by payoff. Every item you close improves every application after it.
