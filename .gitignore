@@ -1,7 +1,10 @@
 # --- Datos personales: NUNCA se publican ---
-# El banco de evidencias real es la fuente de verdad privada. Se versiona el ejemplo
-# ficticio (CARRERA-EVIDENCIAS.example.md), nunca el real.
+# El banco de evidencias real es la fuente de verdad privada. Se versionan los ejemplos
+# ficticios (CARRERA-EVIDENCIAS.example.md, CAREER-EVIDENCE.example.md), nunca el real.
+# Cada nombre existe en español y en inglés. La misma lista vive en tools/cvcheck/bank.py
+# (PRIVATE_PATTERNS), que usa el hook de pre-commit.
 CARRERA-EVIDENCIAS.md
+CAREER-EVIDENCE.md
 
 # Antigua ubicacion de la fuente del CV. Ahora vive en candidaturas/<carpeta>/,
 # pero se sigue ignorando por si alguien la crea aqui.
@@ -9,7 +12,9 @@ tools/cv-content.js
 
 # Registro personal de candidaturas y todas las candidaturas reales.
 CANDIDATURAS.md
+APPLICATIONS.md
 candidaturas/
+applications/
 
 # Documentos generados
 *.pdf
@@ -25,4 +30,5 @@ pg-*.jpg
 
 # Dependencias y ruido del sistema
 node_modules/
+__pycache__/
 .DS_Store

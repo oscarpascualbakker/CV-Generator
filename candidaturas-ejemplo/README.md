@@ -2,7 +2,8 @@
 
 Esta carpeta muestra la salida del sistema para una oferta inventada, usando el banco
 ficticio de Jane Doe (`CARRERA-EVIDENCIAS.example.md`). Sirve para ver el formato de los
-entregables sin exponer datos reales.
+entregables sin exponer datos reales. La versión en inglés de este ejemplo está en
+`applications-example/`.
 
 `2026-01-northwind-head-of-ai/` contiene los entregables de texto:
 

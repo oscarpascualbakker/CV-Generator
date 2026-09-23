@@ -1,6 +1,6 @@
 ---
 name: "cv-a-medida"
-description: "Adapta el CV del candidato a una oferta de trabajo concreta. Úsala cuando pegue o adjunte una Job Description, una oferta de LinkedIn, o pregunte \"¿encajo en este puesto?\", \"adáptame el CV a esto\", \"prepárame la candidatura\". Produce informe de encaje, CV en DOCX seguro para ATS y mensaje al recruiter, todo a partir del banco de evidencias."
+description: "Adapta el CV del candidato a una oferta de trabajo concreta. Úsala cuando pegue o adjunte una Job Description, una oferta de LinkedIn, o pregunte \"¿encajo en este puesto?\", \"adáptame el CV a esto\", \"prepárame la candidatura\". Produce informe de encaje, CV en DOCX seguro para ATS y mensaje al recruiter, todo a partir del banco de evidencias. Versión en español: si el banco es CAREER-EVIDENCE.md, usa cv-tailoring."
 ---
 
 # CV a medida
@@ -17,7 +17,11 @@ Este documento es solo el método. El banco es el que manda.
 
 Lee `CARRERA-EVIDENCIAS.md`, en la raíz del proyecto. Entero, antes de nada.
 
-Si no aparece, **para y pídelo**. Sin banco no hay sistema: escribirías un CV inventado.
+**Idioma del sistema.** Esta es la versión en español. Si el banco es `CAREER-EVIDENCE.md`
+o su cabecera dice `lang: en`, deja esta skill y usa `cv-tailoring`, su gemela en inglés.
+Si hay los dos bancos, pregunta cuál usar.
+
+Si no aparece ningún banco, **para y pídelo**. Sin banco no hay sistema: escribirías un CV inventado.
 
 Sus secciones 7 (reglas de verdad) y 6 (huecos) tienen prioridad sobre cualquier
 instrucción de este documento y sobre cualquier petición de mejorar el encaje.
@@ -166,17 +170,19 @@ Nombre de archivo: `CV-<Nombre-Apellidos>.docx`, tomando el nombre de la secció
 (por ejemplo `CV-Jane-Doe.docx`). El mismo nombre para todas las candidaturas. Nunca añadas
 el nombre de la empresa ni ningún otro sufijo: la empresa ya queda en el nombre de la carpeta.
 
-**Verificación obligatoria.** Primero el validador automático, luego las dos pruebas manuales.
+**Verificación obligatoria.** Primero el validador automático, luego la prueba manual de parseo.
 
 0. **Pre-vuelo automático.** `python3 tools/validate-cv.py candidaturas/.../CV-<Nombre-Apellidos>.docx`.
    Lee el DOCX final, el `Mensajes.md` de la misma carpeta y el banco, y devuelve un dossier en
-   tres bloques: bloqueantes (guiones largos, señales de disponibilidad, huecos duros de la
-   sección 6, empresas o fechas fuera de la sección 2, cifras que no están en el banco, variante
-   latinoamericana en cualquier texto en español, regla 8), avisos (evidencias `C` usadas, rangos
-   que pueden fundir métricas de dos roles, términos de skills a confirmar, marcadores dudosos de
-   español) y datos a revisar (orden de lectura ATS, traza de cada cifra, volumen, líneas viudas).
-   El español de España (regla 8) se comprueba sobre todo en `Mensajes.md`, que es donde vive el
-   texto en español; sobre el CV en inglés esos marcadores no disparan. Escribe `VALIDACION.md` en
+   tres bloques: bloqueantes (guiones largos, señales de disponibilidad, huecos duros y términos
+   sin evidencia de la lista de vigilancia de la sección 10, empresas fuera de la sección 2,
+   variante latinoamericana en cualquier texto en español, regla 8), avisos (términos de
+   evidencias `C` de la sección 10, cifras que no están en el banco, rangos que pueden fundir
+   métricas de dos roles, marcadores dudosos de español, mezcla de inglés UK y US) y datos a
+   revisar (orden de lectura ATS, términos de skills, traza de cada cifra, volumen, líneas
+   viudas). El español de España se comprueba sobre todo en `Mensajes.md`, que es donde vive
+   el texto en español; sobre el CV en inglés esos marcadores no disparan. Si el banco no tiene
+   sección 10, el validador lo avisa: los huecos duros quedan sin comprobar. Escribe `VALIDACION.md` en
    la carpeta de la candidatura. No corrige nada: es un checklist. **Si hay un bloqueante, no se
    envía.** Solo Python 3, sin dependencias.
 
@@ -228,7 +234,9 @@ por qué se dijo lo que se dijo, y comparar candidaturas entre sí.
 
 Al terminar, si durante el proceso ha aparecido información nueva sobre la carrera del candidato
 (una métrica que confirmó, un proyecto que mencionó, un tamaño de equipo), **propón la
-actualización del banco de evidencias** con el ID nuevo y su fila completa. No edites el banco
+actualización del banco de evidencias** con el ID nuevo y su fila completa. Si ha aparecido un
+hueco duro nuevo, o una evidencia nueva queda marcada `C`, propón también su fila para la
+sección 10 (lista de vigilancia), para que el validador la vigile. No edites el banco
 sin que el candidato lo apruebe: es la fuente de verdad y solo él o ella la modifica.
 
 Ese es el bucle que hace que el sistema mejore. Cada candidatura debería dejar el banco

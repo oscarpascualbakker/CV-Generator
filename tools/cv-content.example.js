@@ -1,11 +1,13 @@
 // EJEMPLO FICTICIO. Ninguna persona, empresa ni cifra de este fichero es real.
-// Sirve de plantilla: la skill cv-a-medida escribe un cv-content.js con este formato en
-// la carpeta de cada candidatura, a partir de tu banco de evidencias. Para probarlo:
+// Sirve de plantilla: la skill (cv-a-medida en español, cv-tailoring en inglés) escribe un
+// cv-content.js con este formato en la carpeta de cada candidatura, a partir de tu banco
+// de evidencias. Para probarlo:
 //   CV_CONTENT=tools/cv-content.example.js node tools/build-cv.js prueba.docx
 //
 // Formato: module.exports = (h) => [ ...párrafos... ], donde `h` son los helpers
 // de build-cv.js. Las empresas de aquí deben coincidir con la sección 2 del banco
-// (CARRERA-EVIDENCIAS.example.md) para que validate-cv.py no las marque como inventadas.
+// (CARRERA-EVIDENCIAS.example.md o CAREER-EVIDENCE.example.md, que tienen las mismas)
+// para que validate-cv.py no las marque como inventadas.
 module.exports = (h) => [
   h.name('Jane Doe'),
   h.headline('Senior Engineering Manager | AI Delivery Teams, Team Growth & AI-Assisted Engineering'),

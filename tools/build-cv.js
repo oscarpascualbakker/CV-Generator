@@ -3,9 +3,12 @@
 //
 // Este fichero es SOLO el renderizador: helpers de layout + ensamblado del DOCX.
 // No contiene datos de nadie. El contenido del CV (nombre, contacto, experiencia)
-// vive en `candidaturas/<carpeta>/cv-content.js`, que NO se versiona. Se indica con CV_CONTENT:
+// vive en la carpeta de cada candidatura (`candidaturas/<carpeta>/cv-content.js`, o
+// `applications/<folder>/cv-content.js` si el sistema va en inglés), que NO se versiona.
+// Se indica con CV_CONTENT:
 //   CV_CONTENT=candidaturas/<carpeta>/cv-content.js node tools/build-cv.js <salida.docx>
-// El contenido real se genera a partir del banco de evidencias (CARRERA-EVIDENCIAS.md).
+// El contenido real se genera a partir del banco de evidencias
+// (CARRERA-EVIDENCIAS.md o CAREER-EVIDENCE.md).
 const {
   Document, Packer, Paragraph, TextRun, BorderStyle,
 } = require('docx');
@@ -81,11 +84,13 @@ const contentPath = process.env.CV_CONTENT
   ? path.resolve(process.env.CV_CONTENT)
   : path.join(__dirname, 'cv-content.js');
 if (!fs.existsSync(contentPath)) {
+  // El mensaje va en los dos idiomas: aquí aún no se sabe cuál usa el candidato.
   console.error(
-    `No existe ${contentPath}.\n` +
-    'Indica la fuente del CV con CV_CONTENT:\n' +
+    `No existe / Not found: ${contentPath}\n` +
+    'Indica la fuente del CV con CV_CONTENT / Set the CV source with CV_CONTENT:\n' +
     '  CV_CONTENT=candidaturas/<carpeta>/cv-content.js node tools/build-cv.js <salida.docx>\n' +
-    'Para probar con el ejemplo:  CV_CONTENT=tools/cv-content.example.js node tools/build-cv.js prueba.docx',
+    '  CV_CONTENT=applications/<folder>/cv-content.js node tools/build-cv.js <output.docx>\n' +
+    'Ejemplo / Example:  CV_CONTENT=tools/cv-content.example.js node tools/build-cv.js test.docx',
   );
   process.exit(1);
 }
